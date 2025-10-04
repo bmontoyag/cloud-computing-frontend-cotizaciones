@@ -1,26 +1,33 @@
-# MS Cotizaciones
 
-APIs para proyectos y presupuestos (PostgreSQL).
+# Frontend Cotizaciones (React + Vite)
 
-## Endpoints
-- GET /api/cotizaciones/proyectos
-- POST /api/cotizaciones/proyectos
-- GET /api/cotizaciones/presupuestos/{id_proyecto}
-- POST /api/cotizaciones/presupuestos
+Pequeño frontend para listar proyectos desde el microservicio de Cotizaciones expuesto por API Gateway.
 
-## SQL mínimo
+## Desarrollo local
+```bash
+npm install
+npm run dev
 ```
-CREATE TABLE IF NOT EXISTS proyecto(
-  id_proyecto VARCHAR(50) PRIMARY KEY,
-  nombre_proyecto VARCHAR(150),
-  cliente VARCHAR(100),
-  total_proyecto NUMERIC,
-  estado VARCHAR(30)
-);
-CREATE TABLE IF NOT EXISTS presupuesto(
-  id_presupuesto VARCHAR(50) PRIMARY KEY,
-  id_proyecto VARCHAR(50) REFERENCES proyecto(id_proyecto),
-  nombre_presupuesto VARCHAR(150),
-  total_presupuesto NUMERIC
-);
+Crea un archivo `.env` con:
+```
+VITE_API_URL=https://<api-id>.execute-api.us-east-1.amazonaws.com/api/cotizaciones/proyectos
+```
+
+## Build
+```bash
+npm run build
+```
+Salida en `dist/`.
+
+## Despliegue en AWS S3 + CloudFront
+1. Crear bucket S3 (público para hosting estático)
+2. Subir carpeta `dist/` al bucket
+3. Crear distribución CloudFront con el bucket como origen
+4. Habilitar CORS en API Gateway para el dominio de CloudFront
+
+Comandos de ejemplo (CLI):
+```bash
+npm run build
+aws s3 mb s3://frontend-cotizaciones-app
+aws s3 sync dist/ s3://frontend-cotizaciones-app --delete
 ```

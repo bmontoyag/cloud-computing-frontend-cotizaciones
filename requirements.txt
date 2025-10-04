@@ -1,5 +1,0 @@
-fastapi
-mangum
-psycopg2-binary
-pydantic
-uvicorn
