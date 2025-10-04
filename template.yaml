@@ -1,0 +1,25 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: MS Cotizaciones - FastAPI + Lambda + RDS PostgreSQL
+Resources:
+  CotizacionesFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: ms-cotizaciones
+      CodeUri: .
+      Handler: app.main.handler
+      Runtime: python3.10
+      MemorySize: 512
+      Timeout: 30
+      Environment:
+        Variables:
+          DB_HOST: rds-cotizaciones.xxxxx.us-east-1.rds.amazonaws.com
+          DB_NAME: postgres
+          DB_USER: admin
+          DB_PASS: TuClave
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /api/cotizaciones/{proxy+}
+            Method: ANY
