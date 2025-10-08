@@ -1,8 +1,8 @@
 
 (function () {
   const baseURL = (window.APP_CONFIG && window.APP_CONFIG.baseURL) || "";
-  const proyectosURL = `${baseURL}/api/cotizaciones/proyectos`;
-  const presupuestosURL = `${baseURL}/api/cotizaciones/presupuestos`;
+  const proyectosURL = `${baseURL}/cotizaciones/proyectos`;
+  const presupuestosURL = `${baseURL}/cotizaciones`;
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => Array.from(document.querySelectorAll(sel));
   $("#api-url").textContent = baseURL;
